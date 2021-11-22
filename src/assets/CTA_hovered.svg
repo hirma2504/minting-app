@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="252px" height="58px" viewBox="0 0 252 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle Copy@1x</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Connect-Wallet" transform="translate(-36.000000, -931.000000)" fill="#AAAAAA">
+            <path d="M50.0540437,931 L281.876991,931 C285.190699,931 287.876991,933.686292 287.876991,937 C287.876991,937.341678 287.847805,937.682732 287.789751,938.019441 L279.858717,984.019441 C279.362527,986.897346 276.866323,989 273.945956,989 L42.1230092,989 C38.8093007,989 36.1230092,986.313708 36.1230092,983 C36.1230092,982.658322 36.1521951,982.317268 36.2102485,981.980559 L44.141283,935.980559 C44.6374735,933.102654 47.1336772,931 50.0540437,931 Z" id="Rectangle-Copy"></path>
+        </g>
+    </g>
+</svg>

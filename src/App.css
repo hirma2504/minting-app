@@ -1,38 +1,700 @@
-.App {
-  text-align: center;
+/*@import url(//db.onlinewebfonts.com/c/5ab304ade0d4f62d027d12464ca69443?family=Apple+Color+Emoji);*/
+
+body {
+  background-color: #052B3A;
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+#root {
+  /* display: flex; */
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: 'Futur';
+  src: local('Futur'), url(./assets/futura/futur.ttf) format('truetype');
 }
 
-@keyframes App-logo-spin {
+@font-face {
+  font-family: 'FuturaBold';
+  src: local('FuturaBold'), url(./assets/futura/FuturaBoldFont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'FuturaMedium';
+  src: local('FuturaMedium'), url(./assets/futura/FuturaMediumBt.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'FuturaHeavy';
+  src: local('FuturaHeavy'), url(./assets/futura/FuturaHeavyFont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'HalantLight';
+  src: local('HalantLight'), url(./assets/halant/Halant-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'HalantMedium';
+  src: local('HalantMedium'), url(./assets/halant/Halant-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'HalantBold';
+  src: local('HalantBold'), url(./assets/halant/Halant-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'HalantRegular';
+  src: local('HalantRegular'), url(./assets/halant/Halant-Regular.ttf) format('truetype');
+}
+
+@keyframes rotation {
   from {
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(359deg);
   }
 }
+
+.btn-primary:disabled, .btn-primary.disabled {
+  color: #fff;
+  background-color: #aaa;
+  border: none;
+  opacity: 1 !important;
+}
+
+/*#052B3A #13A7E2*/
+.btn-primary:active {
+  background-color: #052B3A;
+  color: #fff;
+  outline: none !important;
+  box-shadow: none;
+}
+
+.btn-primary:focus {
+  background-color: #fff;
+  color: #052B3A;
+  outline: none !important;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: #fff;
+  color: #052B3A;
+  border-width: 0px;
+  outline: none !important;
+  box-shadow: none;
+  
+}
+
+.btn-primary:hover {
+  background-color: #052B3A;
+  color: #fff;
+}
+
+
+a:hover {
+  color: rgb(48, 110, 224);
+}
+
+.col-wp {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.container {
+  max-width: 100%;
+  max-height: 100%;
+}
+.top-logo {
+  margin-left: 285px;
+}
+
+.main-box {
+  height: 45vh !important;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    padding-top: 120px;
+}
+
+@media only screen and (max-height: 900px) {
+  .main-box {
+    height: 30vh !important;
+  }
+}
+
+.main-bottom {
+  /* position:absolute; */
+  left:0;
+  bottom:0;
+  right:0;
+}
+.invalid-feedback {
+  color: yellow;
+  margin-top: 4px !important;
+  text-align: center;
+  font-family: FuturaHeavy;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+.external-link {
+  width: 16px;
+  height: 16px;
+  padding: 1px;
+  object-fit: contain;
+  color: rgba(5, 43, 58, 0.2);
+  margin-bottom: 3px !important;
+}
+
+.external-link:hover {
+  color: #e5c100;
+}
+
+
+.balance {
+  width: auto;
+  margin-top: 15px !important;
+  font-family: FuturaMedium;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #aaa;
+  z-index: 203;
+}
+
+
+.connected-sub {
+  margin-top: 5px !important;
+  font-family: HalantRegular;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #aaa;
+  
+}
+
+
+.faice-alert {
+  border-radius: 10px !important;
+  border: solid 3px rgba(255, 255, 255) !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  color: white;
+  padding-right: 1rem !important;
+  transform: skew(-10deg,0deg) !important;
+}
+
+.alert-link-faice {
+  color: #a89ab0;
+  text-decoration: none !important;
+}
+
+.faice-alert-sub {
+  font-family: FuturaHeavy;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #888;
+}
+
+.faice-alert .alert-heading {
+  font-family: FuturaHeavy;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+.faice-alert .btn-close {
+  color: white;
+  background: transparent url('./assets/cross-big.svg') center/1.3em auto no-repeat;
+  z-index: 1200;
+}
+
+.alert-faice {
+  font-family: FuturaHeavy;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+img.Cross-big {
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+
+.minted-label {
+  font-family: FuturaHeavy;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.mint-denied {
+  font-family: HalantRegular;
+  font-size: 22px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+  z-index: 1000;
+}
+
+.mint-button {
+  width: 132px;
+  height: 54px;
+  border-radius: 30px;
+  background-color: #fff;
+  border: none;
+
+  margin-top: 15px;
+
+  font-family: FuturaHeavy;
+  font-size: 22px !important;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #888;
+}
+
+.mint-button:hover {
+  background-color: #e5c100; /* Green */
+}
+
+.mint-count {
+  font-family: HalantBold;
+  font-size: 150px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+}
+
+
+
+.down-button {
+  -ms-flex: 0 0 40px;
+  flex: 0 0 40px;
+}
+
+.mint-max-button {
+  position: absolute;
+  cursor: pointer;
+  vertical-align: middle;
+  z-index: 1000;
+}
+
+.mint-up-button {
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.mint-down-button {
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.img-right {
+  display: flex;
+  align-items:flex-end;
+  flex-wrap: wrap;
+}
+
+.img-center {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mint-question {
+  
+  font-family: HalantRegular;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #aaa;
+}
+
+.fixed-width-100{
+  -ms-flex: 0 0 170px;
+  flex: 0 0 170px;
+}
+
+
+.sale-input-box {
+  width: 264px;
+  height: 54px;
+  border-radius: 30px;
+  border: none;
+  background-color: #222;
+}
+
+.sale-input {
+  width: 264px;
+  height: 54px;
+  padding-left: 32px !important;
+  border-radius: 30px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  text-align: center;
+
+  font-family: FuturaHeavy;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+
+}
+
+.sale-input:focus {
+  background-color: transparent;
+  color: white;
+  border: none;
+  outline: none;
+}
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+
+
+
+
+body.modal-open > :not(.modal) {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+
+
+.trusted-col-text {
+  padding-right: 25px !important;
+}
+.trusted-col2-text {
+  padding-left: 25px !important;
+}
+
+.trusted-img2 {
+  margin-top: 15px;
+}
+
+.trusted-modal .modal-content .modal-header {
+  border-bottom: none !important;
+  outline: none !important;
+}
+
+.trusted-modal .modal-content .modal-header .btn-close {
+  background: transparent url(./assets/cross-big.svg) center/1rem auto no-repeat;
+}
+
+
+.trusted-modal .modal-content .row  {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.trusted-modal .modal-content .row > * {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.trusted-modal .modal-content  {
+  background-color: #052B3A !important;
+  border-radius: 10px;
+  border: solid 3px rgba(136, 136, 136, 0.5);
+}
+
+
+.trusted-modal-content .modal-content  {
+  width: 900px !important;
+  min-width: 900px !important;
+}
+
+.trusted-modal-content .modal-body   {
+  /* min-width: 628px !important;
+  min-height: 611px !important;
+  max-width: 628px !important;
+  max-height: 611px !important; */
+  padding: 0px 110px 0px 110px !important;
+
+}
+
+.btn-close {
+  color: #fff !important;
+}
+
+.special_modal .modal-body {
+  background-color: transparent;
+}
+
+.special_modal .modal-header {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.z-high {
+  z-index: 1000;
+  min-height: 60px !important;
+}
+
+.z-low {
+  z-index: 0;
+}
+
+
+.trusted-box {
+  margin-bottom: 25px !important;
+  margin-right: 15px !important;
+  cursor: pointer;
+}
+
+
+.App-logo {
+  pointer-events: none;
+}
+
+.play-control {
+  color: white;
+}
+
+
+.message-list {
+  position: absolute;
+  display: flexbox;
+  bottom: 50px;
+  right: 70px;
+  z-index: 1100;
+}
+
+
+.metamask-icon {
+  width: 40px;
+  height: 40px;
+}
+
+
+.faices-logo {
+  width: 200px;
+  z-index: 100;
+}
+
+
+.row-border {
+  border-bottom: solid 1px #979797;
+}
+
+
+.headline {
+  font-family: FuturaHeavy;
+  font-size: 20px !important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaa;
+  z-index: 110;
+}
+
+
+.main-button {
+  width: 254px;
+  height: 58px;
+  transform: skew(-10deg,0deg) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 22px;
+  font-family: FuturaHeavy;
+  font-style: bold;
+  position: relative;
+  z-index: 200;
+}
+
+
+.main-button span {
+  display: block;
+  transform: skew(10deg); 
+}
+
+
+.logout-button {
+  position: absolute;
+  width: 250;
+  margin-top: 15px !important;
+  font-family: FuturaMedium;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #aaa;
+  background: none;
+  border:none;
+  padding: 0;
+  z-index: 201;
+  max-width: 500;
+}
+
+
+.logout-button:hover {
+  background-color: transparent; 
+  color: #052B3A; 
+  background: none;
+}
+
+
+.wallet-connect-hover:hover {
+  background-color: rgba(5, 43, 58, 0.2);  
+  cursor: pointer;
+}
+
+
+.wallet-connect-title {
+  font-family: FuturaHeavy;
+  font-size: 20px !important;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #fff;
+  margin-top: 10px;
+}
+
+
+.wallet-connect-sub {
+  font-family: FuturaHeavy;
+  font-size: 14px !important;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #979797;
+  margin-top: 5px;
+}
+
+.rings {
+  position: relative;
+}
+
+
+.ring1{
+  width: 864px;
+  height: 764px;
+  margin: 70px 70px 0px 0px;
+
+  animation: rotation 40s infinite linear;
+  position: absolute;
+  z-index: 90;
+}
+
+.ring2{ 
+  width: 800px;
+  height: 800px;
+  margin: 0px 0px 20px 0px;
+ 
+  animation: rotation 15s infinite linear;
+  position: absolute;
+  z-index: 91;
+}
+
+.ring3{
+  width: 820px;
+  height: 820px;
+  margin: 0px 70px 0px 70px;
+  
+  animation: rotation 25s infinite reverse;
+  z-index: 92;
+  position: absolute;
+}
+
+.ring4{
+  width: 850px;
+  height: 850px;
+  margin: 0px 0px 0px 70px;
+ 
+  animation: rotation 50s infinite linear;
+  z-index: 93;
+  position: absolute;
+
+  
+}
+
+
+
+
+
+

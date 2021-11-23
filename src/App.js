@@ -18,10 +18,11 @@ import max from "./assets/max.svg";
 import up from "./assets/up-active.svg";
 import down from "./assets/down-active.svg";
 
-const AVAILABLE_NFTS = 1; // TODO: Count of NFTs
+const AVAILABLE_NFTS = 10000; // TODO: Count of NFTs
 const MAX_MINT_COUNT_BY_USER = 100;
 const MAX_MINT_AMOUNT = 10;
 const LOCAL_STORAGE_KEY = '928e7d91-1a13-4338-bf6a-2451f50f29ee'; // TODO: New Guid
+const {REACT_APP_MINTSTATE, REACT_APP_HANS} = process.env;
 
 
 const useStateWithLocalStorage = localStorageKey => {
@@ -49,6 +50,8 @@ function App() {
   const [modalConnectShow, setModalConnectShow] = useState(false);
   const [minted, setMinted] = useState(0);
   const [currentProvider, setProvider] = useState();
+  
+  
 
   async function getEthBalance(walletAddress) {
     try {
@@ -163,6 +166,7 @@ function App() {
     }
     
     subscribeMintEvent((id) => {
+      setMessage(messages =>[...messages.filter(el => el.body !== `Address: `), {head : "Hans:" + {id}, body: ``, variant: 'success'}])
       setMinted(`${parseInt(id) + 1}`.toString());
     })
 
@@ -318,6 +322,8 @@ function App() {
     
 
     <Container>
+
+    <div className="mint-question text-center">"Insgesamt gemintet:" + {minted} + "REactState:" + {REACT_APP_MINTSTATE}</div>
       <Row className="justify-content-center p-5"> 
         <img alt="" className="pt-5 faices-logo" src={faicesLogo} />
       </Row>

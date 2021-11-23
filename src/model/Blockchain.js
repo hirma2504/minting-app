@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 const contractABI = require("../contracts/Faices.json"); // TODO: Set Contract
 const contractAddress = "0xc0AEA18AD202251184B0Ee48030b8a7904DeC636" // TODO: Set Contract Address
-const price = 1; //0.04 ETH 40
+const price = 1; //0.04 ETH 40 (calculated with finney) // TODO: Set Price
 
 
 let web3 = undefined
@@ -10,10 +10,13 @@ let contract = undefined
 const web3Alchemy = new Web3('https://eth-rinkeby.alchemyapi.io/v2/CMOYd_z9dxmUwziC8EN5iB7KKGZ56uC2')
 let subscription = undefined
 
+
 export function isWeb3Ready() {
     return web3 !== undefined
 }
 
+
+// Minten
 export async function mintFaices(web3, total, accountFrom, onHash) {
   const contract = new web3.eth.Contract(contractABI.abi, contractAddress);
   const tx = {
@@ -33,10 +36,14 @@ export async function mintFaices(web3, total, accountFrom, onHash) {
   web3.eth.sendTransaction(tx).on('transactionHash', onHash).on('error', function(error){ console.log(error) })
 }
 
+
+
 export async function getTotalSupply(web3) {
   contract = new web3.eth.Contract(contractABI.abi, contractAddress)
   return contract.methods.totalSupply().call();
 }
+
+
 
 /*export async function subscribeMintEvent(callback) {
   contract = new web3Alchemy.eth.Contract(contractABI.abi, contractAddress)
@@ -59,11 +66,12 @@ export async function getTotalSupply(web3) {
     })
 }*/
 
+
 export async function subscribeMintEvent(callback) {
 
   const contract = new web3Alchemy.eth.Contract(contractABI.abi, contractAddress);
   subscription = web3Alchemy.eth.subscribe('logs', {
-      address: contract.options.address,
+      address: contractAddress, // TODO: contract.options.address
       topics: [web3Alchemy.utils.sha3("FaiceMinted(uint256)")] // TODO:
     }, (error, result) => {
       if (!error && web3Alchemy) {
@@ -86,6 +94,7 @@ export async function subscribeMintEvent(callback) {
     })
 }
 
+// Returns a list of all tokens owned by 'address'
 export async function getTokens(web3, address) {
   contract = new web3Alchemy.eth.Contract(contractABI.abi, contractAddress)
   const balance = await contract.methods.balanceOf(address).call();

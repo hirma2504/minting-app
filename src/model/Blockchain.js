@@ -1,14 +1,13 @@
 import Web3 from 'web3';
 const contractABI = require("../contracts/Faices.json"); // TODO: Set Contract
-const contractAddress = "0xc0AEA18AD202251184B0Ee48030b8a7904DeC636" // TODO: Set Contract Address
+const contractAddress = "0x9DEFdCBBE543a3C07dFf88ce0706023970770665" // TODO: Set Contract Address
 const price = 1; //0.04 ETH 40 (calculated with finney) // TODO: Set Price
 
 
 let web3 = undefined
 let contract = undefined
-// TODO: Requires Infura or Alchemy API key
-const web3Alchemy = new Web3('https://eth-rinkeby.alchemyapi.io/v2/CMOYd_z9dxmUwziC8EN5iB7KKGZ56uC2')
-let subscription = undefined
+// TODO: Requires Infura or Alchemy API key (websocket)
+const web3Alchemy = new Web3('wss://eth-rinkeby.alchemyapi.io/v2/CMOYd_z9dxmUwziC8EN5iB7KKGZ56uC2')
 
 
 export function isWeb3Ready() {
@@ -44,34 +43,12 @@ export async function getTotalSupply(web3) {
 }
 
 
-
-/*export async function subscribeMintEvent(callback) {
-  contract = new web3Alchemy.eth.Contract(contractABI.abi, contractAddress)
-  const eventJsonInterface = web3Alchemy.utils._.find(
-    contract._jsonInterface,
-    o => o.name === 'FaiceMinted' && o.type === 'event',
-  )
-  subscription = web3Alchemy.eth.subscribe('logs', {
-      address: contract.options.address,
-      topics: [eventJsonInterface.signature]
-    }, (error, result) => {
-      if (!error && web3Alchemy) {
-        const eventObj = web3Alchemy.eth.abi.decodeLog(
-          eventJsonInterface.inputs,
-          result.data,
-          result.topics.slice(1)
-        )
-        callback(eventObj.tokenId)
-      }
-    })
-}*/
-
-
 export async function subscribeMintEvent(callback) {
 
   const contract = new web3Alchemy.eth.Contract(contractABI.abi, contractAddress);
-  subscription = web3Alchemy.eth.subscribe('logs', {
-      address: contractAddress, // TODO: contract.options.address
+  
+  web3Alchemy.eth.subscribe('logs', {
+      address: contract.options.address,
       topics: [web3Alchemy.utils.sha3("FaiceMinted(uint256)")] // TODO:
     }, (error, result) => {
       if (!error && web3Alchemy) {
@@ -90,9 +67,26 @@ export async function subscribeMintEvent(callback) {
         )
         console.log(eventObj)
         callback(eventObj.tokenId);
+      } else if(error){
+        console.error(error)
+
       }
     })
 }
+
+/*export async function subscribeMintEvent(callback) {
+  const contract = new web3Alchemy.eth.Contract(contractABI.abi, contractAddress);
+  contract.events.FaiceMinted()
+  .on("connected", function(subscriptionId){
+    console.log("SubscirptionId: " + subscriptionId);
+  }).on('data', function(event) {
+  
+    console.log(event.value); // TODO: json aufbröseln
+    
+  }).on('error', function(error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+    console.log(`error`);
+  });
+}*/
 
 // Returns a list of all tokens owned by 'address'
 export async function getTokens(web3, address) {

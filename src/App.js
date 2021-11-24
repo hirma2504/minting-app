@@ -18,11 +18,11 @@ import max from "./assets/max.svg";
 import up from "./assets/up-active.svg";
 import down from "./assets/down-active.svg";
 
-const AVAILABLE_NFTS = 10000; // TODO: Count of NFTs
+const AVAILABLE_NFTS = 7907; // TODO: Count of NFTs 7907
 const MAX_MINT_COUNT_BY_USER = 100;
 const MAX_MINT_AMOUNT = 10;
-const LOCAL_STORAGE_KEY = '928e7d91-1a13-4338-bf6a-2451f50f29ee'; // TODO: New Guid
-const {REACT_APP_MINTSTATE, REACT_APP_HANS} = process.env;
+const LOCAL_STORAGE_KEY = '928e7d91-1a13-4338-bf6a-2451f50f29ee'; // TODO: New Guid for new project
+const {REACT_APP_MINTSTATE} = process.env;
 
 
 const useStateWithLocalStorage = localStorageKey => {
@@ -55,7 +55,7 @@ function App() {
 
   async function getEthBalance(walletAddress) {
     try {
-      const web3 = new Web3(new Web3.providers.HttpProvider('https://eth-rinkeby.alchemyapi.io/v2/CMOYd_z9dxmUwziC8EN5iB7KKGZ56uC2'));
+      const web3 = new Web3(new Web3.providers.HttpProvider('https://eth-rinkeby.alchemyapi.io/v2/CMOYd_z9dxmUwziC8EN5iB7KKGZ56uC2')); //TODO
       var balance = await web3.eth.getBalance(walletAddress);
       console.log(web3.utils.fromWei(balance, "ether"));
       // balance = web3.toDecimal(balance);
@@ -145,6 +145,7 @@ function App() {
   }
 
   const handleAccountsChanged = async (accounts) => {
+    console.log(3333333);
     //if(!isLogged) return
     if (accounts.length === 0) {
       // MetaMask is locked or the user has not connected any accounts
@@ -157,18 +158,21 @@ function App() {
 
   useEffect(() => {
     window.onbeforeunload = function() { return "Prevent reload" }
-
+  
     const video = document.querySelector("video");
     video.playbackRate = 0.2;
-
+  
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', handleAccountsChanged);
     }
-    
-    subscribeMintEvent((id) => {
-      setMessage(messages =>[...messages.filter(el => el.body !== `Address: `), {head : "Hans:" + {id}, body: ``, variant: 'success'}])
-      setMinted(`${parseInt(id) + 1}`.toString());
-    })
+ 
+    try
+    {
+      subscribeMintEvent((id) => {
+        setMinted(`${parseInt(id) + 1}`.toString());
+      })
+    }
+    catch(err) {console.error(err);}
 
   }, []);
 
@@ -323,7 +327,7 @@ function App() {
 
     <Container>
 
-    <div className="mint-question text-center">"Insgesamt gemintet:" + {minted} + "REactState:" + {REACT_APP_MINTSTATE}</div>
+      {/*<div className="mint-question text-center">"Insgesamt gemintet:" + {minted} + "REactState:" + {REACT_APP_MINTSTATE}</div> */}
       <Row className="justify-content-center p-5"> 
         <img alt="" className="pt-5 faices-logo" src={faicesLogo} />
       </Row>
@@ -340,88 +344,97 @@ function App() {
         <img alt="" className="ring4" src={ring4} />
 
         
-        <Row md="auto" className="justify-content-center" hidden={isLogged}> 
-          <Button className="btn btn-primary main-button" onClick={SignIn}>
-            <span>Connect Wallet</span>
-          </Button>{' '}
-        </Row>
-
-
-        <Container hidden={!(isLogged && mintedByUser >= MAX_MINT_COUNT_BY_USER && minted < AVAILABLE_NFTS)}>
-          <Row className="headline justify-content-center" >
-            <div className="mint-denied text-center">Thank you for your trust and enthusiasm!<br/>Please leave some for the others 🙏</div>
-          </Row>
-
-          <Row className="justify-content-center pt-5"> 
-              <Button className="btn btn-primary logout-button pt-5" onClick={SignOut}>logout</Button>
+        <Container hidden={(REACT_APP_MINTSTATE !== "NotStarted")}>
+          <Row md="auto" className="headline justify-content-center" >
+            <Button className="btn btn-primary main-button-inactive" disabled>
+              <span>MINTING SOON</span>
+            </Button>{' '}
           </Row>
         </Container>
-
         
-        
-        <Container hidden={!(isLogged && minted >= AVAILABLE_NFTS)}>
-          
-          <Row className="headline justify-content-center">
-            <div className="mint-denied text-center">Thank you everybody!<br/>We are sold out 🙏</div>
-            <div className="mint-denied text-center pt-3">Check out collection on 
-              <a rel="noreferrer" target="_blank" href="https://opensea.io/collection/faices.io" role="button" tabIndex="0" className="alert-link-faice"> Opensea <img alt="" style={{transition: "none"}} src={openLink} className="external-link"/></a>
-            </div>
-          </Row>
-
-          <Row className="justify-content-center pt-5">
-            <Button className="btn btn-primary logout-button pt-5" onClick={SignOut}>logout</Button>
-          </Row>
-      
-        </Container>
-    
-
-
-        <Container hidden={!(isLogged && mintedByUser < MAX_MINT_COUNT_BY_USER && minted < AVAILABLE_NFTS)}>
-          <Row className="justify-content-right img-center pull-right"> 
-            <Col>
-              <Row>
-                <Col className="col-wp mint-up-button">
-                  <img alt="" class="float-end mint-up-button" src={up} onClick={(e) => { increaseMintAmount(); }}/>
-                </Col>
-                <Col className="col-wp down-button mint-down-button">
-                  <img alt="" class="pull-md-right mint-down-button" src={down} onClick={(e) => { decreaseMintAmount(); }}/>
-                </Col>
-              </Row>
-            </Col>
-            
-            <Col className="justify-content-center fixed-width-100">
-              <div className="mint-count text-center">{mintAmount}</div>
-            </Col>
-            <Col className="img-center">
-              <img className="mint-max-button" alt="" src={max} onClick={(e) => { e.preventDefault(); setMintAmount(MAX_MINT_AMOUNT); }}/>
-            </Col>
-          </Row>
-
-
-          <Row className="headline justify-content-center pt-2">
-            <div className="mint-question text-center">How many Faices NFTs do you<br/>wanna mint for 0.04 Ξ each?</div>
-          </Row>
-          
-          <Row className="justify-content-center pt-5"> 
-            <Button className="btn btn-primary main-button" type="submit" onClick={(e) => { e.preventDefault(); Mint(); }}>
-              <span>Mint</span>
+        <Container hidden={(REACT_APP_MINTSTATE == "NotStarted")}>
+          <Row md="auto" className="justify-content-center" hidden={isLogged}> 
+            <Button className="btn btn-primary main-button" onClick={SignIn}>
+              <span>Connect Wallet</span>
             </Button>{' '}
           </Row>
 
+          <Container hidden={!(isLogged && mintedByUser >= MAX_MINT_COUNT_BY_USER && minted < AVAILABLE_NFTS)}>
+            <Row className="headline justify-content-center" >
+              <div className="mint-denied text-center">Thank you for your trust and enthusiasm!<br/>Please leave some for the others 🙏</div>
+            </Row>
+
+            <Row md="auto" className="justify-content-center pt-5"> 
+                <Button className="btn btn-primary logout-button pt-5" onClick={SignOut}>logout</Button>
+            </Row>
+          </Container>
+
+          
+          
+          <Container hidden={!(isLogged && minted >= AVAILABLE_NFTS)}>
             
-          <Row className="headline justify-content-center">
-            <div className="connected-sub text-center">Connected with {shortAddr()}</div>
-          </Row>
-    
-          <Row className="justify-content-center pt-2"> 
-            <Col className="pt-5">
-              <div className="balance">{ethBalance}</div>
-            </Col>
-                  
-            <Col>
-              <Button className="btn btn-primary logout-button pt-5" onClick={SignOut}>logout</Button>{' '}
-            </Col>
-          </Row>
+            <Row className="headline justify-content-center">
+              <div className="mint-denied text-center">Thank you everybody!<br/>We are sold out 🙏</div>
+              <div className="mint-denied text-center pt-3">Check out collection on 
+                <a rel="noreferrer" target="_blank" href="https://opensea.io/collection/faices.io" role="button" tabIndex="0" className="alert-link-faice"> Opensea <img alt="" style={{transition: "none"}} src={openLink} className="external-link"/></a>
+              </div>
+            </Row>
+
+            <Row md="auto" className="justify-content-center pt-5">
+              <Button className="btn btn-primary logout-button pt-5" onClick={SignOut}>logout</Button>
+            </Row>
+        
+          </Container>
+      
+
+
+          <Container hidden={!(isLogged && mintedByUser < MAX_MINT_COUNT_BY_USER && minted < AVAILABLE_NFTS)}>
+            <Row className="justify-content-right img-center pull-right"> 
+              <Col>
+                <Row>
+                  <Col className="col-wp mint-up-button">
+                    <img alt="" class="float-end mint-up-button" src={up} onClick={(e) => { increaseMintAmount(); }}/>
+                  </Col>
+                  <Col className="col-wp down-button mint-down-button">
+                    <img alt="" class="pull-md-right mint-down-button" src={down} onClick={(e) => { decreaseMintAmount(); }}/>
+                  </Col>
+                </Row>
+              </Col>
+              
+              <Col className="justify-content-center fixed-width-100">
+                <div className="mint-count text-center">{mintAmount}</div>
+              </Col>
+              <Col className="img-center">
+                <img className="mint-max-button" alt="" src={max} onClick={(e) => { e.preventDefault(); setMintAmount(MAX_MINT_AMOUNT); }}/>
+              </Col>
+            </Row>
+
+
+            <Row className="headline justify-content-center pt-2">
+              <div className="mint-question text-center">How many Faices NFTs do you<br/>wanna mint for 0.04 Ξ each?</div>
+            </Row>
+            
+            <Row className="justify-content-center pt-5"> 
+              <Button className="btn btn-primary main-button" type="submit" onClick={(e) => { e.preventDefault(); Mint(); }}>
+                <span>Mint</span>
+              </Button>{' '}
+            </Row>
+
+              
+            <Row className="headline justify-content-center">
+              <div className="connected-sub text-center">Connected with {shortAddr()}</div>
+            </Row>
+      
+            <Row className="justify-content-center pt-2"> 
+              <Col className="pt-5">
+                <div className="balance">{ethBalance}</div>
+              </Col>
+                    
+              <Col>
+                <Button className="btn btn-primary logout-button pt-5" onClick={SignOut}>logout</Button>{' '}
+              </Col>
+            </Row>
+          </Container>
         </Container>
       </Row>
     </Container> 

@@ -581,6 +581,21 @@ body.modal-open > :not(.modal) {
   z-index: 200;
 }
 
+.main-button-inactive {
+  width: 254px;
+  height: 58px;
+  transform: skew(-10deg,0deg) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 22px;
+  font-family: FuturaHeavy;
+  font-style: bold;
+  position: relative;
+  background-color: #888;
+  color:  #aaa important!;
+  z-index: 200;
+}
+
 
 .main-button span {
   display: block;
